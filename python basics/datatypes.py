@@ -53,3 +53,39 @@ print(both)
 
 print(5 == 5)#boolean
 print(5 != 5)
+
+#list comprehensions
+numbers = [1, 3, 5]
+doubled = [x * 2 for x in numbers]
+print(doubled)
+
+friends = ["Rolf", "Sam", "Samantha", "Saurabh", "Jen"]
+start_s = [friend for friend in friends if friend.startswith("S")]
+print(start_s)
+
+friend_age = {"Rolf": 24, "Adam": 30, "Anne": 27} #dicionary
+friend_age["Bob"] = 20
+print(friend_age["Bob"])
+for name in friend_age:
+    print(f"{name}:{friend_age[name]}")
+for name,age in friend_age.items():
+    print(f"{name}:{age}")
+
+#list of dict
+friends = [
+    {"name": "Rolf", "age": 20},
+    {"name": "James", "age": 30}
+]
+print(friends[1]["name"])
+
+#destructuring variables
+t = 5, 11
+_, y = t
+print(y)
+*head, tail = [1, 2, 3, 4, 5]
+print(head)
+print(tail)
+
+#destructuring dictionary
+nums = {"x":15,"y":25}
+print(**nums)
