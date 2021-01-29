@@ -6,9 +6,8 @@ def authenticate(username, password):
     user.password = ''.join(user.password)
     if user and user.password == password:
         return user
-    return "kem Cho"
 
 
 def identity(payload):  #jwt defined function
     user_id = payload['identity']
-    return UserModel.find_by_id(tuple(user_id))
+    return UserModel.find_by_id(user_id)
