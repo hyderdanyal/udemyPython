@@ -46,13 +46,19 @@ class Item(Resource):
                              required=True,
                              help="this field cannot be blank"
                              )
+        parser.add_argument('store_id',
+                            type=int,
+                            required=True,
+                            help="store id cannot be blank"
+                            )
+
         data = parser.parse_args()
         item = ItemModel.find_by_name(name)
 
         if item:
             item.price = data['price']
         else:
-            item = ItemModel(name, data['price'])
+            item = ItemModel(name, data['price'], data['store_id'])
         item.save_to_db()
 
         return item.json()
@@ -60,15 +66,18 @@ class Item(Resource):
 
 class Items(Resource):
     def get(self):
-        connection = sqlite3.connect('data.db')
-        cursor = connection.cursor()
+        return {'items': [item.json() for item in ItemModel.query.all()]}  #list comprehension
+        # return {'items': list(map(lambda x: x.json, ItemModel.query.all()))}  #map function
 
-        query = "SELECT * FROM items"
-        result = cursor.execute(query)
-        items = []
-        for row in result:
-            items.append({'id': row[0], 'name': row[1], 'price': row[2]})
-
-        connection.close()
-        return {'items': items}
+        # connection = sqlite3.connect('data.db')
+        # cursor = connection.cursor()
+        #
+        # query = "SELECT * FROM items"
+        # result = cursor.execute(query)
+        # items = []
+        # for row in result:
+        #     items.append({'id': row[0], 'name': row[1], 'price': row[2]})
+        #
+        # connection.close()
+        # return {'items': items}
 
